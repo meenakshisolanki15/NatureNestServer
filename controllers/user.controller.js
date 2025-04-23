@@ -1,6 +1,8 @@
 import UserModel from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import sendEmailFun from "../config/sendEmail.js";
+import VerificationEmail from "../utils/verifyEmailTemplate.js";
 
 export async function registerUserController(request, response) {
 
@@ -15,7 +17,7 @@ export async function registerUserController(request, response) {
             })
         }
 
-        user = await UserModel.findOne({email:email});
+        user = await UserModel.findOne({email: email});
 
         if(user){
             return response.json({
@@ -34,18 +36,36 @@ export async function registerUserController(request, response) {
         user = new UserModel({
             email : email,
             password : hashPassword, 
-            name : name
+            name : name,
+            otp: verifyCode,
+            otpExpires: Date.now()+600000
         });
 
         await user.save();
         // const VerifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${save?._id}`
 
         //send verification email
-        const verifyEmail = await sendEmail({
+        await sendEmailFun({
             sendTo : email,
-            
-        })
+            subject : "Verify email from Ecommerce App",
+            text: "",
+            html : VerificationEmail(name, verifyCode) 
+        });
 
+
+        // create a JMT token for verification purpose
+
+        const token = jwt.sign(
+            { email: user.email, id: user._id },
+            process.env.JSON_WEB_TOKEN_SECRET_KEY
+        );
+
+        return response.status(200).json({
+            success: true,
+            error: false,
+            message: "User registered successfully! Please verify your email.",
+            token: token, // Optional 
+        });
 
     } catch (error){
         return response.status(500).json({
