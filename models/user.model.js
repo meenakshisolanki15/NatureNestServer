@@ -5,6 +5,11 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Provide name"]
     },
+    email: {
+        type: String,
+        required: [true, "Provide email"],
+        unique: true
+    },
     password:{
         type: String,
         required: [true, "Provide password"]
@@ -20,6 +25,14 @@ const userSchema = mongoose.Schema({
     verify_email:{
         type: Boolean,
         default : false
+    },
+    access_token: {
+        type: String,
+        default: ''
+    },
+    refresh_token: {
+        type: String,
+        default: ''
     },
     last_login_date:{
         type: Date,
@@ -48,6 +61,14 @@ const userSchema = mongoose.Schema({
             ref : 'order'
         }
     ],
+    otp : {
+        type: String,
+        default:  null
+    },
+    otpExpires: {
+        type: Date,
+        default: null
+    },
     forgot_password_otp :{
         type : String,
         default : null

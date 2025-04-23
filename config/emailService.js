@@ -6,10 +6,10 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com', // e.g., 'smtp.gmail.com' for Gmail
     port: 465, // 465 for secure
-    secure: true, // ture for por  t 465, false for other ports
+    secure: true, // ture for port 465, false for other ports
     auth:{
         user: process.env.EMAIL, // your SMTP username
-        pass: process.env.EMAIL_PASS, // your SMTP password
+        pass: process.env.EMAIL_PASS // your SMTP password
     },
 });
 
@@ -22,7 +22,7 @@ async function sendEmail(to, subject, text, html) {
             to, // list of receivers
             subject, // Subject line
             text, // plain text body
-            html, // html body
+            html // html body
         });
         return { success: true, messageId: info.messageId};
     } catch(error){
