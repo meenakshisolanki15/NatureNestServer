@@ -9,10 +9,12 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    images: {
-        type: String,
-        required : true
-    },
+    images: [
+        {
+            type: String,
+            required : true
+        }
+    ],
     brand: {
         type: String,
         default : ''
@@ -41,7 +43,7 @@ const productSchema = mongoose.Schema({
          type: String,
         default : ''
     },
-    category:{
+    category : {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
         required: true
@@ -65,12 +67,6 @@ const productSchema = mongoose.Schema({
     productRam:[
         {
             type : String,
-            default: null,
-        }
-    ],
-    size:[
-        {
-            type: String,
             default: null,
         }
     ],
