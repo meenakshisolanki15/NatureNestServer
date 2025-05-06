@@ -1,6 +1,7 @@
 import CategoryModel from '../models/category.model.js';
 
 import { v2 as cloudinary } from 'cloudinary';
+import { error } from 'console';
 import fs from 'fs';
 
 
@@ -15,6 +16,7 @@ cloudinary.config({
 // upload images
 var imagesArr = [];
 export async function uploadImages(request, response) {
+    
     try {
         imagesArr = [];
 
@@ -26,19 +28,26 @@ export async function uploadImages(request, response) {
             overwrite: false,
         };
 
+        // for (let i = 0; i < image?.length; i++) {
+
+        //     const img = await cloudinary.uploader.upload(
+        //         image[i].path,
+        //         options,
+        //         function (error, result) {
+        //             console.log(result)
+        //             imagesArr.push(result.secure_url);
+        //             fs.unlinkSync(`uploads/${request.files[i].filename}`);
+
+        //         }
+        //     );
+        // }
         for (let i = 0; i < image?.length; i++) {
-
-            const img = await cloudinary.uploader.upload(
-                image[i].path,
-                options,
-                function (error, result) {
-                    console.log(result)
-                    imagesArr.push(result.secure_url);
-                    fs.unlinkSync(`uploads/${request.files[i].filename}`);
-
-                }
-            );
+            const result = await cloudinary.uploader.upload(image[i].path, options);
+            console.log(result);
+            imagesArr.push(result.secure_url);
+            fs.unlinkSync(`uploads/${request.files[i].filename}`);
         }
+        
 
         return response.status(200).json({
             images: imagesArr
@@ -245,7 +254,11 @@ export async function removeImageFromCloudinary(request, response) {
             }
         );
         if (res) {
-            response.status(200).send(res);
+            return response.status(200).json({
+                error: false,
+                success: true,
+                message: "image deleted successfully"
+            })
         }
     }
 

@@ -15,10 +15,7 @@ const productSchema = mongoose.Schema({
             required : true
         }
     ],
-    brand: {
-        type: String,
-        default : ''
-    },
+
     price: {
         type: Number,
         default: 0
@@ -35,47 +32,19 @@ const productSchema = mongoose.Schema({
          type: String,
         default : ''
     },
-    subCatId: {
-         type: String,
-        default : ''
-    },
-    subCat: {
-         type: String,
-        default : ''
-    },
     category : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
-    },
-    countInStock:{
-        type: Number,
-        required: true
+        ref: 'Category',     
     },
     rating:{
         type: Number,
         default : 0
     },
-    isFeatured:{
-        type : Boolean,
-        default: false,
-    },
     discount:{
         type : Number,
         required: true
     },
-    productRam:[
-        {
-            type : String,
-            default: null,
-        }
-    ],
-    productWeight:[
-        {
-            type: String,
-            default: null
-        }
-    ],
+   
     dateCreated:{
         type: Date,
         default: Date.now
