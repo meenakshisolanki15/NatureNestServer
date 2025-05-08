@@ -1,14 +1,14 @@
 import {Router} from 'express';
 import auth from '../middleware/auth.js';
 import uplaod from '../middleware/multer.js';
-import { createProduct, deleteProduct, getAllFeatured, getAllProduct, getAllProductsByCatId, getAllProductsByCatName, getAllProductsByPrice, getAllProductsByRating, getAllProductsBySubCatId, getAllProductsBySubCatName, getProduct, getProductsCount, updateProduct, uploadImages } from '../controllers/product.Controller.js';
+import { createProduct, deleteProduct, getAllFeatured, getAllProducts, getAllProductsByCatId, getAllProductsByCatName, getAllProductsByPrice, getAllProductsByRating, getAllProductsBySubCatId, getAllProductsBySubCatName, getProduct, getProductsCount, updateProduct, uploadImages } from '../controllers/product.Controller.js';
 import { removeImageFromCloudinary } from '../controllers/category.controller.js';
 
 
 const productRouter = Router();
 productRouter.post('/uploadImages', auth,uplaod.array('images'), uploadImages);
 productRouter.post('/create', auth, createProduct);
-productRouter.get('/getAllProducts', getAllProduct);
+productRouter.get('/getAllProducts', getAllProducts);
 productRouter.get('/getAllProductsByCatId/:id', getAllProductsByCatId);
 productRouter.get('/getAllProductsByCatName', getAllProductsByCatName);
 productRouter.get('/getAllProductsBySubCatId/:id', getAllProductsBySubCatId);

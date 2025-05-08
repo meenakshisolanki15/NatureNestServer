@@ -68,6 +68,7 @@ export async function createProduct(request, response) {
             oldPrice: request.body.oldPrice,
             catName: request.body.catName,
             catId: request.body.catId,
+            //category: request.body.category,
             subCatId: request.body.subCatId,
             subCat: request.body.subCat,
             countInStock: request.body.countInStock,
@@ -95,8 +96,8 @@ export async function createProduct(request, response) {
 
         response.status(200).json({
             message: "Product created Successfully",
-            error: true,
-            success : false,
+            error: false,
+            success : true,
             product: product
                 
         })
@@ -114,7 +115,7 @@ export async function createProduct(request, response) {
 
 
 // get all product
-export async function getAllProduct(request, response) {
+export async function getAllProducts(request, response) {
     try{
 
         const page = parseInt(request.query.page) || 1;
@@ -675,20 +676,13 @@ export async function updateProduct(request, response) {
                 name: request.body.name,
                 description: request.body.description,
                 images: request.body.images,
-                brand: request.body.brand,
                 price: request.body.price,
                 oldPrice: request.body.oldPrice,
                 catName: request.body.catName,
                 catId: request.body.catId,
-                subCatId: request.body.subCatId,
-                subCat: request.body.subCat,
-                category: request.body.category,
-                countInStock: request.body.countInStock,
                 rating: request.body.rating,
-                isFeatured: request.body.isFeatured,
                 discount: request.body.discount,
-                productRam: request.body.productRam,
-                productWeight: request.body.productWeight,
+               
 
             },
             { new : true}
